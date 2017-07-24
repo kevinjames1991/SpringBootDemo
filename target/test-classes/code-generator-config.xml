@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<generatorConfiguration xmlns="http://www.modernavenue.com/schema/code/generator"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.modernavenue.com/schema/code/generator http://www.modernavenue.com/schema/code/generator/config.xsd">
+    <properties resource="jdbc.properties" url="../jdbc.properties">
+        <property name="testProperty" value="test"/>
+    </properties>
+
+    <jdbcConnection driverClass="${oracle.driverClassName}"
+                    connectionURL="${oracle.url}" userId="${oracle.username}" password="${oracle.password}"/>
+
+    <project targetPackage="com.mySBoot" targetProject="\src\main\java"/>
+    <table tableName="live_dict" module="live" domainObjectName="LiveDict" schema="CANUDILO" enable="true" />
+
+</generatorConfiguration>

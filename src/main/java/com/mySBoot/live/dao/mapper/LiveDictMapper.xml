@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mySBoot.live.dao.LiveDictMapper">
+    <resultMap id="BaseResultMap" type="com.mySBoot.live.pojo.LiveDict">
+        <id column="ID" property="id" jdbcType="DECIMAL"/>
+        <result column="TYPE" property="type" jdbcType="DECIMAL"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="VALUE" property="value" jdbcType="VARCHAR"/>
+        <result column="CODE" property="code" jdbcType="VARCHAR"/>
+        <result column="PARENTID" property="parentid" jdbcType="DECIMAL"/>
+        <result column="SORT" property="sort" jdbcType="DECIMAL"/>
+        <result column="STATUS" property="status" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="BaseColumnList">
+        ID,TYPE,NAME,VALUE,CODE,PARENTID,SORT,STATUS
+    </sql>
+
+    <sql id="WhereClause">
+        <where>
+            <trim prefixOverrides="AND" >
+                <if test="id != null">
+                    AND ID = #{id,jdbcType=DECIMAL}
+                </if>
+                <if test="type != null">
+                    AND TYPE = #{type,jdbcType=DECIMAL}
+                </if>
+                <if test="name != null">
+                    AND NAME = #{name,jdbcType=VARCHAR}
+                </if>
+                <if test="value != null">
+                    AND VALUE = #{value,jdbcType=VARCHAR}
+                </if>
+                <if test="code != null">
+                    AND CODE = #{code,jdbcType=VARCHAR}
+                </if>
+                <if test="parentid != null">
+                    AND PARENTID = #{parentid,jdbcType=DECIMAL}
+                </if>
+                <if test="sort != null">
+                    AND SORT = #{sort,jdbcType=DECIMAL}
+                </if>
+                <if test="status != null">
+                    AND STATUS = #{status,jdbcType=DECIMAL}
+                </if>
+            </trim>
+        </where>
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from live_dict
+        where ID=#{id,jdbcType=DECIMAL}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.mySBoot.live.pojo.LiveDict">
+        insert into live_dict
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+            ID,
+            </if>
+            <if test="type != null">
+            TYPE,
+            </if>
+            <if test="name != null">
+            NAME,
+            </if>
+            <if test="value != null">
+            VALUE,
+            </if>
+            <if test="code != null">
+            CODE,
+            </if>
+            <if test="parentid != null">
+            PARENTID,
+            </if>
+            <if test="sort != null">
+            SORT,
+            </if>
+            <if test="status != null">
+            STATUS,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides="," >
+            <if test="id != null">
+            #{id,jdbcType=DECIMAL},
+            </if>
+            <if test="type != null">
+            #{type,jdbcType=DECIMAL},
+            </if>
+            <if test="name != null">
+            #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+            #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+            #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="parentid != null">
+            #{parentid,jdbcType=DECIMAL},
+            </if>
+            <if test="sort != null">
+            #{sort,jdbcType=DECIMAL},
+            </if>
+            <if test="status != null">
+            #{status,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.mySBoot.live.pojo.LiveDict">
+        update live_dict set
+        <trim suffixOverrides="," >
+        <if test="type != null">
+        TYPE=#{type,jdbcType=DECIMAL},
+        </if>
+        <if test="name != null">
+        NAME=#{name,jdbcType=VARCHAR},
+        </if>
+        <if test="value != null">
+        VALUE=#{value,jdbcType=VARCHAR},
+        </if>
+        <if test="code != null">
+        CODE=#{code,jdbcType=VARCHAR},
+        </if>
+        <if test="parentid != null">
+        PARENTID=#{parentid,jdbcType=DECIMAL},
+        </if>
+        <if test="sort != null">
+        SORT=#{sort,jdbcType=DECIMAL},
+        </if>
+        <if test="status != null">
+        STATUS=#{status,jdbcType=DECIMAL}
+        </if>
+        </trim>
+        where
+        ID=#{id,jdbcType=DECIMAL}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from live_dict where
+        ID=#{id,jdbcType=DECIMAL}
+    </delete>
+
+    <select id="selectByExample" parameterType="com.mySBoot.live.pojo.LiveDict" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumnList"/>
+        from live_dict
+        <include refid="WhereClause"/>
+    </select>
+
+    <select id="countByExample" parameterType="com.mySBoot.live.pojo.LiveDict" resultType="java.lang.Integer">
+        select count(1)
+        from live_dict
+        <include refid="WhereClause"/>
+    </select>
+    
+    <select id="selectDictTree" resultMap="BaseResultMap">
+        select name, value
+        from LIVE_DICT
+        <where>
+        	status = 1
+			<if test="value != null">
+				and parentid in (select id from LIVE_DICT where value = #{value})
+			</if>        
+        </where>
+        order by parentid,name
+    </select>    
+</mapper>
