@@ -1,4 +1,4 @@
-package com.mySBoot.common;
+package com.mySBoot.common.vo;
 
 import org.apache.commons.lang3.StringUtils;
 

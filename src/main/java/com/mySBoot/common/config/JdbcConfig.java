@@ -1,19 +1,19 @@
-package com.mySBoot.config;
+package com.mySBoot.common.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
+import com.alibaba.druid.pool.DruidDataSource;
 
 @Configuration
 public class JdbcConfig {

@@ -1,4 +1,4 @@
-package com.mySBoot.config;
+package com.mySBoot.common.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

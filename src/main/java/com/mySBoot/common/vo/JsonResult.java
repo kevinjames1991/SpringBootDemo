@@ -1,4 +1,4 @@
-package com.mySBoot.common;
+package com.mySBoot.common.vo;
 
 
 import java.util.HashMap;

@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mySBoot.util.JsonUtil;
+import com.mySBoot.common.util.JsonUtil;
   
 @RestController  
 @EnableAutoConfiguration  

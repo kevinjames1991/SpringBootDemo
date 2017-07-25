@@ -1,4 +1,4 @@
-package com.mySBoot.util;
+package com.mySBoot.common.util;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
@@ -20,19 +19,23 @@ import com.google.common.collect.Lists;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisDataException;
 
-public class RedisUtil {
+/**
+ * redis集群操作工具类
+ * @author chenzhangwei
+ * @time 2017年7月25日上午10:42:04
+ */
+public class RedisDb {
 
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisDb.class);
 
-    @Autowired
-    private static StringRedisTemplate springRedisTemplate;
-
+    private static StringRedisTemplate redisTemplate;
 
     static {
-    	springRedisTemplate = (StringRedisTemplate) BeanUtil.getAppContext().getBean("redisTemplate");
+        redisTemplate = BeanUtil.getAppContext().getBean("stringRedisTemplate", StringRedisTemplate.class);
+        LOGGER.info("redisTemplate==null:" + (redisTemplate == null));
     }
-    
+
     /**
      * 删除缓存记录
      *
@@ -40,7 +43,7 @@ public class RedisUtil {
      */
     public static void delete(String key) {
         try {
-            springRedisTemplate.delete(key);
+            redisTemplate.delete(key);
         } catch (Exception e) {
             handleJedisException(e);
         }
@@ -66,9 +69,9 @@ public class RedisUtil {
         try {
             String serialize = serialize(value);
             if (exp > 0) {
-                springRedisTemplate.opsForValue().set(key, serialize, exp, TimeUnit.SECONDS);
+                redisTemplate.opsForValue().set(key, serialize, exp, TimeUnit.SECONDS);
             } else {
-                springRedisTemplate.opsForValue().set(key, serialize);
+                redisTemplate.opsForValue().set(key, serialize);
             }
         } catch (Exception e) {
             handleJedisException(e);
@@ -99,7 +102,7 @@ public class RedisUtil {
      */
     public static String getString(String key) {
         try {
-            String value = springRedisTemplate.opsForValue().get(key);
+            String value = redisTemplate.opsForValue().get(key);
             return value;
         } catch (Exception e) {
             handleJedisException(e);
@@ -146,7 +149,7 @@ public class RedisUtil {
     public static List<String> getListRange(String listKey, int start, int end) {
 
         try {
-            return springRedisTemplate.opsForList().range(listKey, start, end);
+            return redisTemplate.opsForList().range(listKey, start, end);
         } catch (Exception e) {
             handleJedisException(e);
         }
@@ -161,7 +164,7 @@ public class RedisUtil {
      */
     public static Map<String, String> getStringMapAll(String mapKey) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             Map<String, String> result = hashOpt.entries(mapKey);
             return result;
         } catch (Exception e) {
@@ -183,7 +186,7 @@ public class RedisUtil {
      */
     public static void putStringToMap(String mapKey, String field, String value) {
         try {
-            springRedisTemplate.opsForHash().put(mapKey, field, value);
+            redisTemplate.opsForHash().put(mapKey, field, value);
         } catch (Exception e) {
             handleJedisException(e);
         }
@@ -191,7 +194,7 @@ public class RedisUtil {
 
     public static void addStringToList(String key, String value) {
         try {
-            springRedisTemplate.opsForList().leftPush(key, value);
+            redisTemplate.opsForList().leftPush(key, value);
         } catch (Exception e) {
             handleJedisException(e);
         }
@@ -209,7 +212,7 @@ public class RedisUtil {
      */
     public static int putStringToMap(String mapKey, Map<String, String> data) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             hashOpt.putAll(mapKey, data);
         } catch (Exception e) {
             handleJedisException(e);
@@ -227,7 +230,7 @@ public class RedisUtil {
      */
     public static String getStringFromMap(String mapKey, String field) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             String data = hashOpt.get(mapKey, field);
             return data;
         } catch (Exception e) {
@@ -245,7 +248,7 @@ public class RedisUtil {
      */
     public static boolean hexistsString(String mapKey, String field) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             return hashOpt.hasKey(mapKey, field);
         } catch (Exception e) {
             handleJedisException(e);
@@ -262,7 +265,7 @@ public class RedisUtil {
      */
     public static <F> boolean hexists(String mapKey, F field) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             return hashOpt.hasKey(mapKey, serialize(field));
         } catch (Exception e) {
             handleJedisException(e);
@@ -290,7 +293,7 @@ public class RedisUtil {
      */
     public static <F> String getFromMap(String mapKey, F field) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             String data = hashOpt.get(mapKey, serialize(field));
             return data;
         } catch (Exception e) {
@@ -318,7 +321,7 @@ public class RedisUtil {
      */
     public static long removeStringFromMap(String mapKey, String field) {
         try {
-            HashOperations<String, String, String> hashOpt = springRedisTemplate.opsForHash();
+            HashOperations<String, String, String> hashOpt = redisTemplate.opsForHash();
             return hashOpt.delete(mapKey, field);
         } catch (Exception e) {
             handleJedisException(e);
@@ -394,7 +397,7 @@ public class RedisUtil {
             } else {
                 serialize = serialize(value);
             }
-            springRedisTemplate.opsForList().rightPush(key, serialize);
+            redisTemplate.opsForList().rightPush(key, serialize);
         } catch (Exception e) {
             handleJedisException(e);
             return false;
@@ -411,12 +414,12 @@ public class RedisUtil {
      * @time 2017年4月7日下午1:40:06
      */
     public static String leftPop(String key) {
-        String data = springRedisTemplate.opsForList().leftPop(key);
+        String data = redisTemplate.opsForList().leftPop(key);
         return data;
     }
 
     public static String leftPop(String key, long time, TimeUnit timeUnit) {
-        String data = springRedisTemplate.opsForList().leftPop(key, time, timeUnit);
+        String data = redisTemplate.opsForList().leftPop(key, time, timeUnit);
         return data;
     }
 

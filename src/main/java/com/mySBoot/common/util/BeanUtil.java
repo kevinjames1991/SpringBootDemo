@@ -1,4 +1,4 @@
-package com.mySBoot.util;
+package com.mySBoot.common.util;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;

@@ -1,4 +1,4 @@
-package com.mySBoot.common;
+package com.mySBoot.common.vo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;

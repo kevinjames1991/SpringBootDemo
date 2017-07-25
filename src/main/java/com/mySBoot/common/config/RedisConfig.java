@@ -1,4 +1,4 @@
-package com.mySBoot.config;
+package com.mySBoot.common.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +38,6 @@ public class RedisConfig {
 	@Bean(name="redisTemplate")
 	public RedisTemplate<String, String> redisTemplate() {
 		StringRedisTemplate template = new StringRedisTemplate(getConnectionFactory());
-//		RedisTemplate<?, ?> template = new StringRedisTemplate(getConnectionFactory());
 		return template;
 	}
 }
