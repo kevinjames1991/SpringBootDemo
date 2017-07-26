@@ -25,24 +25,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mySBoot.common.util.JsonUtil;
 import com.mySBoot.common.vo.JsonResult;
+
+import oracle.net.aso.i;
   
 @RestController  
 @EnableAutoConfiguration  
 @RequestMapping("/test")
 public class Test {  
       
-	protected static Logger logger=LoggerFactory.getLogger(Test.class);  
-	
+	protected static ThreadLocal<Logger> logger= new ThreadLocal<Logger>() {
+		public Logger initialValue(){
+			return LoggerFactory.getLogger(Test.class);  
+		}
+	} ;
+	private static int i = 0;
 	
     @RequestMapping("/homeTest")
-    String homeTest(@RequestParam(name="name") String name) {  
-    	logger.info("home");
+    String homeTest(@RequestParam(name="name") String name) { 
+    	logger.set(LoggerFactory.getLogger(Example.class));
+    	logger.get().info("home"+i);
+    	i=1;
         return name + " homeTest";  
     }  
       
     @RequestMapping("/hello/{myName}")  
-    String index(@PathVariable String myName) {  
-    	logger.info("index");
+    String index(@PathVariable String myName) throws Exception {  
+    	Thread.sleep(1000*5);
+    	logger.get().info("index"+i);
         return "Hello "+myName+"!!!";  
     }  
     

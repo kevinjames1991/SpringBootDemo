@@ -15,7 +15,7 @@ import com.mySBoot.common.util.RedisUtil;
 @RequestMapping("/testRedis")
 public class TestRedisController {
 
-	protected static Logger logger = LoggerFactory.getLogger(TestRedisController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestRedisController.class);
 
 	@RequestMapping("/set")
 	@ResponseBody

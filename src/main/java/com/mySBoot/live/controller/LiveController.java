@@ -16,7 +16,7 @@ import com.mySBoot.live.service.LiveDictService;
 @RequestMapping("/live")
 public class LiveController {
       
-	protected static Logger logger=LoggerFactory.getLogger(LiveController.class); 
+	private static final Logger logger=LoggerFactory.getLogger(LiveController.class); 
 	
 	@Autowired
 	private LiveDictService liveDictService;

@@ -30,7 +30,7 @@ import com.mySBoot.common.vo.JsonResult;
 @RequestMapping("/")
 public class Example {  
       
-	protected static Logger logger=LoggerFactory.getLogger(Example.class);  
+	private static final Logger logger=LoggerFactory.getLogger(Example.class);  
 	
 	
     @RequestMapping("")

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/helloC")
 public class HelloController {
       
-	protected static Logger logger=LoggerFactory.getLogger(HelloController.class);  
+	private static final Logger logger=LoggerFactory.getLogger(HelloController.class);  
 	
 	@Value("${hello.prop:noProp}")
 	private String helloProp;
