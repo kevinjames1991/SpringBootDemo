@@ -3,18 +3,24 @@ package com.mySBoot.thread.controller;
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.tomcat.jni.Library;
+
+import com.google.common.collect.Lists;
+
 
 public class TestQueue {
 	
 	public static void main(String[] args) {
-		BlockingQueue<String> queue = new ArrayBlockingQueue<>(5000);
+		BlockingQueue<String> queue = new ArrayBlockingQueue<>(500);
 		Producer producer = new Producer(queue);
 		Consumer consumer = new Consumer(queue);
 		Thread pThread = new Thread(producer);
@@ -69,20 +75,36 @@ class Consumer implements Runnable {
 	
 	@Override
 	public void run() {
+		List<Future<String>> list = Lists.newArrayList();
+		int i = 0;
 		while(true){
 			try {
+//				if (i++ > 1101) {
+//					executor.shutdown();
+//				}
 				String name = queue.take();
-				executor.submit(() -> {
+//				executor.execute(() -> {
+//					try {
+//						System.out.println(System.currentTimeMillis() + " take -- >> "+ name);
+//						Thread.sleep(100);//模拟处理过程
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				});
+				Future<String> future = executor.submit(() -> {
 					try {
 						System.out.println(System.currentTimeMillis() + " take -- >> "+ name);
 						Thread.sleep(100);//模拟处理过程
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					return name;
 				});
-			} catch (InterruptedException e1) {
+				list.add(future);
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
+//			System.out.println(list.size());
 		}
 	}
 }
