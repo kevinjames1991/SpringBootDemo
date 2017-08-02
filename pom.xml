@@ -114,10 +114,17 @@
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 		        
-		<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+		<!-- solrj相关 -->
 		<dependency>
 		    <groupId>org.apache.solr</groupId>
 		    <artifactId>solr-solrj</artifactId>
+		</dependency>
+ 
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-collections4</artifactId>
+		    <version>4.1</version>
 		</dependency>
         
     </dependencies>  
