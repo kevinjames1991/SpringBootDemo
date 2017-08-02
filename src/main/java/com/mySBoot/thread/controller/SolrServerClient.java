@@ -14,19 +14,24 @@ public class SolrServerClient {
 		this.getServer();
 	}
 
+	static {
+		solrServiceClient = new SolrServerClient();
+	}
+	
 	/**
 	 * SolrServerClient 是线程安全的 需要采用单例模式 此处实现方法适用于高频率调用查询
 	 * 
 	 * @return SolrServerClient
 	 */
 	public static SolrServerClient getInstance() {
-		if (solrServiceClient == null) {
-			synchronized (SolrServerClient.class) {
-				if (solrServiceClient == null) {
-					solrServiceClient = new SolrServerClient();
-				}
-			}
-		}
+//		if (solrServiceClient == null) {
+//			synchronized (SolrServerClient.class) {
+//				if (solrServiceClient == null) {
+//					solrServiceClient = new SolrServerClient();
+//				}
+//			}
+//		}
+		
 		return solrServiceClient;
 	}
 
