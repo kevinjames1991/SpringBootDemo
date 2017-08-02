@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mySBoot.brand.dao.DBrandInfoMapper">
+  <resultMap id="BaseResultMap" type="com.mySBoot.brand.pojo.DBrandInfo">
+    <result column="ID" jdbcType="DECIMAL" property="id" />
+    <result column="SUPPLYID" jdbcType="DECIMAL" property="supplyid" />
+    <result column="LANG" jdbcType="DECIMAL" property="lang" />
+    <result column="BRANDNAME" jdbcType="VARCHAR" property="brandname" />
+    <result column="INDUSTRY" jdbcType="VARCHAR" property="industry" />
+    <result column="LOGOURL" jdbcType="VARCHAR" property="logourl" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="FORMAT" jdbcType="VARCHAR" property="format" />
+    <result column="FROMTO" jdbcType="VARCHAR" property="fromto" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="DECIMAL" property="status" />
+    <result column="CREATEBY" jdbcType="DECIMAL" property="createby" />
+    <result column="CREATETIME" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="UPDATEBY" jdbcType="DECIMAL" property="updateby" />
+    <result column="UPDATETIME" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="MODULEID" jdbcType="DECIMAL" property="moduleid" />
+    <result column="HUMANTYPE" jdbcType="VARCHAR" property="humantype" />
+    <result column="HCODE" jdbcType="DECIMAL" property="hcode" />
+    <result column="HTML" jdbcType="VARCHAR" property="html" />
+    <result column="FLOWSEQ" jdbcType="DECIMAL" property="flowseq" />
+    <result column="VERSION" jdbcType="DECIMAL" property="version" />
+    <result column="ENGLISH_NAME" jdbcType="VARCHAR" property="englishName" />
+  </resultMap>
+  <insert id="insert" parameterType="com.mySBoot.brand.pojo.DBrandInfo">
+    insert into BRAND_INFO (ID, SUPPLYID, LANG, 
+      BRANDNAME, INDUSTRY, LOGOURL, 
+      DESCRIPTION, FORMAT, FROMTO, 
+      REMARK, STATUS, CREATEBY, 
+      CREATETIME, UPDATEBY, UPDATETIME, 
+      MODULEID, HUMANTYPE, HCODE, 
+      HTML, FLOWSEQ, VERSION, 
+      ENGLISH_NAME)
+    values (#{id,jdbcType=DECIMAL}, #{supplyid,jdbcType=DECIMAL}, #{lang,jdbcType=DECIMAL}, 
+      #{brandname,jdbcType=VARCHAR}, #{industry,jdbcType=VARCHAR}, #{logourl,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{format,jdbcType=VARCHAR}, #{fromto,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, #{createby,jdbcType=DECIMAL}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updateby,jdbcType=DECIMAL}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{moduleid,jdbcType=DECIMAL}, #{humantype,jdbcType=VARCHAR}, #{hcode,jdbcType=DECIMAL}, 
+      #{html,jdbcType=VARCHAR}, #{flowseq,jdbcType=DECIMAL}, #{version,jdbcType=DECIMAL}, 
+      #{englishName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mySBoot.brand.pojo.DBrandInfo">
+    insert into BRAND_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="supplyid != null">
+        SUPPLYID,
+      </if>
+      <if test="lang != null">
+        LANG,
+      </if>
+      <if test="brandname != null">
+        BRANDNAME,
+      </if>
+      <if test="industry != null">
+        INDUSTRY,
+      </if>
+      <if test="logourl != null">
+        LOGOURL,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="format != null">
+        FORMAT,
+      </if>
+      <if test="fromto != null">
+        FROMTO,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createby != null">
+        CREATEBY,
+      </if>
+      <if test="createtime != null">
+        CREATETIME,
+      </if>
+      <if test="updateby != null">
+        UPDATEBY,
+      </if>
+      <if test="updatetime != null">
+        UPDATETIME,
+      </if>
+      <if test="moduleid != null">
+        MODULEID,
+      </if>
+      <if test="humantype != null">
+        HUMANTYPE,
+      </if>
+      <if test="hcode != null">
+        HCODE,
+      </if>
+      <if test="html != null">
+        HTML,
+      </if>
+      <if test="flowseq != null">
+        FLOWSEQ,
+      </if>
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="englishName != null">
+        ENGLISH_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="supplyid != null">
+        #{supplyid,jdbcType=DECIMAL},
+      </if>
+      <if test="lang != null">
+        #{lang,jdbcType=DECIMAL},
+      </if>
+      <if test="brandname != null">
+        #{brandname,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="logourl != null">
+        #{logourl,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="format != null">
+        #{format,jdbcType=VARCHAR},
+      </if>
+      <if test="fromto != null">
+        #{fromto,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createby != null">
+        #{createby,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateby != null">
+        #{updateby,jdbcType=DECIMAL},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="moduleid != null">
+        #{moduleid,jdbcType=DECIMAL},
+      </if>
+      <if test="humantype != null">
+        #{humantype,jdbcType=VARCHAR},
+      </if>
+      <if test="hcode != null">
+        #{hcode,jdbcType=DECIMAL},
+      </if>
+      <if test="html != null">
+        #{html,jdbcType=VARCHAR},
+      </if>
+      <if test="flowseq != null">
+        #{flowseq,jdbcType=DECIMAL},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=DECIMAL},
+      </if>
+      <if test="englishName != null">
+        #{englishName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
