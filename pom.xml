@@ -86,7 +86,7 @@
         <dependency>
         	<groupId>com.oracle</groupId>
         	<artifactId>ojdbc6</artifactId>
-        	<version>11.2.0.1.0</version>
+        	<version>11.2.0.3</version>
         </dependency>
         
         <!-- lombok -->
@@ -146,7 +146,7 @@
             <id>central-pro</id>
             <name>central-pro</name>
             <!-- 配置仓库的地址 -->
-            <url>http://114.55.228.150:8881/nexus/content/groups/public/</url>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
